@@ -13,8 +13,12 @@
 
     <!-- 功能卡片 -->
     <el-row :gutter="20">
-      <el-col :span="8" v-for="item in features" :key="item.path">
-        <div class="feature-card" @click="$router.push(item.path)">
+      <el-col :span="8" v-for="item in modules" :key="item.path">
+        <div 
+          class="feature-card" 
+          :class="{ 'feature-card-disabled': !item.enabled }"
+          @click="handleCardClick(item)"
+        >
           <div class="card-content">
             <div class="feature-icon" :style="{ background: item.gradient }">
               <el-icon size="28"><component :is="item.icon" /></el-icon>
@@ -22,7 +26,7 @@
             <h3>{{ item.title }}</h3>
             <p>{{ item.desc }}</p>
           </div>
-          <el-button text type="primary" class="enter-button">
+          <el-button text type="primary" class="enter-button" :disabled="!item.enabled">
             进入功能 <el-icon><ArrowRight /></el-icon>
           </el-button>
         </div>
@@ -32,10 +36,15 @@
 </template>
 
 <script setup>
-import { computed } from "vue";
+import { computed, ref, onMounted } from "vue";
 import { useUserStore } from "@/stores/user";
+import { useRouter } from "vue-router";
+import api from "@/utils/api";
+import { ElMessage } from "element-plus";
 
 const userStore = useUserStore();
+const router = useRouter();
+const modules = ref([]);
 
 const currentDate = computed(() => {
   return new Date().toLocaleDateString("zh-CN", {
@@ -46,50 +55,28 @@ const currentDate = computed(() => {
   });
 });
 
-const features = [
-  {
-    path: "/dimension/three",
-    title: "三动全尺寸判定",
-    desc: "对三动产品进行全尺寸测量数据判定分析",
-    icon: "DataLine",
-    gradient: "linear-gradient(135deg, #3b82f6, #1d4ed8)",
-  },
-  {
-    path: "/dimension/four",
-    title: "四动全尺寸判定",
-    desc: "对四动产品进行全尺寸测量数据判定分析",
-    icon: "DataLine",
-    gradient: "linear-gradient(135deg, #8b5cf6, #6d28d9)",
-  },
-  {
-    path: "/dimension/five",
-    title: "五动全尺寸判定",
-    desc: "对五动产品进行全尺寸测量数据判定分析",
-    icon: "DataLine",
-    gradient: "linear-gradient(135deg, #ec4899, #be185d)",
-  },
-  {
-    path: "/certificate",
-    title: "质量证明单号",
-    desc: "管理和生成质量证明单号文档",
-    icon: "Document",
-    gradient: "linear-gradient(135deg, #10b981, #059669)",
-  },
-  {
-    path: "/maintenance/product-quality",
-    title: "产品检测数据维护",
-    desc: "维护产品质量数据对应关系",
-    icon: "Coin",
-    gradient: "linear-gradient(135deg, #f59e0b, #d97706)",
-  },
-  {
-    path: "/maintenance/report-path",
-    title: "报告路径维护",
-    desc: "配置系统生成报告的存储位置",
-    icon: "FolderOpened",
-    gradient: "linear-gradient(135deg, #6366f1, #4338ca)",
-  },
-];
+const handleCardClick = (item) => {
+  if (item.enabled) {
+    router.push(item.path);
+  } else {
+    ElMessage.warning("该功能模块已禁用");
+  }
+};
+
+const fetchModules = async () => {
+  try {
+    const res = await api.get("/api/modules");
+    if (res.success) {
+      modules.value = res.data;
+    }
+  } catch (error) {
+    console.error("获取模块列表失败:", error);
+  }
+};
+
+onMounted(() => {
+  fetchModules();
+});
 </script>
 
 <style lang="scss" scoped>
@@ -176,30 +163,7 @@ const features = [
       margin-left: 4px;
       transition: transform 0.3s;
     }
-margin: 0 0 8px;
-    font-weight: 600;
-  }
-  
-  p { 
-    font-size: 13px; 
-    color: #909399; 
-    margin: 0; 
-    line-height: 1.6;
-    min-height: 42px;
-  }
-  
-  .enter-button {
-    margin-top: 16px;
-    padding: 0;
-    font-size: 14px;
-    font-weight: 500;
-    transition: all 0.3s;
-    
-    .el-icon {
-      margin-left: 4px;
-      transition: transform 0.3s;
-    }
-    
+
     &:hover .el-icon {
       transform: translateX(4px);
     }
@@ -210,11 +174,11 @@ margin: 0 0 8px;
   opacity: 0.6;
   cursor: not-allowed;
   filter: grayscale(100%);
-  
+
   &:hover {
     transform: none;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-    
+
     .enter-button {
       color: #409eff;
     }
