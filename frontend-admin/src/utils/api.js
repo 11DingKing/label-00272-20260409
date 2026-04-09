@@ -29,6 +29,11 @@ api.interceptors.response.use(
     if (error.response?.status === 401) {
       localStorage.removeItem('token')
       localStorage.removeItem('user')
+      // 保存当前路由，登录后跳转
+      const currentPath = router.currentRoute.value.fullPath
+      if (currentPath !== '/login') {
+        localStorage.setItem('redirectPath', currentPath)
+      }
       if (!isRedirecting) {
         isRedirecting = true
         router.push('/login').finally(() => {

@@ -32,11 +32,13 @@ def create_app(config_name='default'):
     from app.routes.dimension import dimension_bp
     from app.routes.certificate import certificate_bp
     from app.routes.maintenance import maintenance_bp
+    from app.routes.system import system_bp
     
     app.register_blueprint(auth_bp, url_prefix='/api/auth')
     app.register_blueprint(dimension_bp, url_prefix='/api/dimension')
     app.register_blueprint(certificate_bp, url_prefix='/api/certificate')
     app.register_blueprint(maintenance_bp, url_prefix='/api/maintenance')
+    app.register_blueprint(system_bp, url_prefix='/api')
     
     @app.route('/api/health')
     def health():
