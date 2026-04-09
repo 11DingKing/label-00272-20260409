@@ -1,0 +1,144 @@
+// QDPS 全局样式
+:root {
+  --primary-color: #1a5f7a;
+  --secondary-color: #159895;
+  --accent-color: #57c5b6;
+  --bg-dark: #0a2647;
+  --bg-light: #f5f7fa;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  background-color: var(--bg-light);
+}
+
+// Element Plus 主题覆盖
+.el-button--primary {
+  --el-button-bg-color: var(--primary-color);
+  --el-button-border-color: var(--primary-color);
+  --el-button-hover-bg-color: var(--secondary-color);
+  --el-button-hover-border-color: var(--secondary-color);
+}
+
+// 主要操作按钮美化
+.el-card__header .el-button--primary {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-weight: 500;
+  box-shadow: 0 2px 8px rgba(26, 95, 122, 0.25);
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(26, 95, 122, 0.35);
+    background: linear-gradient(135deg, var(--secondary-color) 0%, var(--accent-color) 100%);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+  
+  .el-icon {
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+  
+  span {
+    vertical-align: middle;
+  }
+}
+
+.el-menu {
+  border-right: none !important;
+}
+
+// 页面容器
+.page-container {
+  padding: 20px;
+}
+
+// 卡片样式
+.card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+// 页面标题
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  
+  h2 {
+    font-size: 20px;
+    color: #303133;
+    font-weight: 600;
+  }
+}
+
+// 搜索表单
+.search-form {
+  margin-bottom: 20px;
+  padding: 16px;
+  background: #fafafa;
+  border-radius: 8px;
+}
+
+// 表格操作列
+.action-buttons {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  
+  .el-button {
+    margin: 0;
+  }
+}
+
+// 状态标签
+.status-tag {
+  &.draft {
+    --el-tag-bg-color: #fef0f0;
+    --el-tag-border-color: #fbc4c4;
+    --el-tag-text-color: #f56c6c;
+  }
+  
+  &.submitted {
+    --el-tag-bg-color: #ecf5ff;
+    --el-tag-border-color: #b3d8ff;
+    --el-tag-text-color: #409eff;
+  }
+  
+  &.approved {
+    --el-tag-bg-color: #f0f9eb;
+    --el-tag-border-color: #c2e7b0;
+    --el-tag-text-color: #67c23a;
+  }
+}
+
+// 结果展示
+.result-card {
+  &.pass {
+    border-left: 4px solid #67c23a;
+    background: linear-gradient(to right, #f0f9eb, white);
+  }
+  
+  &.fail {
+    border-left: 4px solid #f56c6c;
+    background: linear-gradient(to right, #fef0f0, white);
+  }
+}

@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  # 后端服务
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: qdps-backend
+    restart: unless-stopped
+    environment:
+      - FLASK_ENV=production
+      - SECRET_KEY=qdps-production-secret-key-2024
+      - OA_DB_HOST=192.168.6.88
+      - OA_DB_USER=sangfor
+      - OA_DB_PASSWORD=Xrac123.com
+      - OA_DB_NAME=ecology
+      - QDPS_DB_HOST=192.168.6.88
+      - QDPS_DB_USER=qdsp
+      - QDPS_DB_PASSWORD=Xrac123.com
+      - QDPS_DB_NAME=qdps
+      - MES_DB_HOST=192.168.6.91
+      - MES_DB_USER=caxa_readonly
+      - MES_DB_PASSWORD=Read@123.com
+      - MES_DB_NAME=caxa_science_mes
+      - REPORT_BASE_PATH=/app/reports
+    volumes:
+      - ./data/reports:/app/reports
+    networks:
+      - qdps-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # 前端管理后台
+  frontend-admin:
+    build:
+      context: ./frontend-admin
+      dockerfile: Dockerfile
+    container_name: qdps-frontend-admin
+    restart: unless-stopped
+    ports:
+      - "8081:80"
+    depends_on:
+      - backend
+    networks:
+      - qdps-network
+
+networks:
+  qdps-network:
+    driver: bridge
+
+volumes:
+  reports-data:

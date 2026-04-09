@@ -1,0 +1,138 @@
+# =========================
+# 通用忽略规则
+# =========================
+
+# 操作系统文件
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# IDE 和编辑器
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+.project
+.classpath
+.settings/
+
+# 日志文件
+*.log
+logs/
+
+# 环境配置
+.env
+.env.local
+.env.*.local
+*.local
+
+# =========================
+# Python / Backend
+# =========================
+
+# 字节码
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# 虚拟环境
+venv/
+env/
+.venv/
+ENV/
+
+# 分发和包
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# 测试和覆盖率
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# pyenv
+.python-version
+
+# mypy
+.mypy_cache/
+
+# =========================
+# Node.js / Frontend
+# =========================
+
+# 依赖目录
+node_modules/
+jspm_packages/
+bower_components/
+
+# 构建输出
+dist/
+build/
+out/
+.next/
+.nuxt/
+
+# 缓存
+.npm
+.eslintcache
+.cache/
+.parcel-cache/
+
+# 测试
+coverage/
+
+# 临时文件
+*.tmp
+*.temp
+
+# =========================
+# Docker
+# =========================
+
+# 忽略 Docker 数据卷
+data/
+
+# =========================
+# 项目特定
+# =========================
+
+# 报告文件
+reports/
+*.xlsx
+*.xls
+
+# 数据库文件
+*.db
+*.sqlite
+*.sqlite3
